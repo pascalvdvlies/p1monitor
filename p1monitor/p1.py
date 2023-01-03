@@ -47,7 +47,7 @@ async def handleSerialInput():
   global status
   global watermeter
 
-  with serial.Serial("/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AI02DX1X-if00-port0", 112500) as ser:
+  with serial.Serial("/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AB7GW0G0-if00-port0", 112500) as ser:
 
     queue = asyncio.Queue()
     loop = asyncio.get_event_loop()

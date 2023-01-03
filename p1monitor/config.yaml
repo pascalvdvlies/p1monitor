@@ -1,6 +1,6 @@
 name: "p1monitor"
 description: "p1 monitor"
-version: "0.0.10"
+version: "0.0.11"
 slug: "p1monitor"
 init: false
 arch:
@@ -13,4 +13,4 @@ startup: system
 ports:
   8080/tcp: 8080
 devices:
-- /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AI02DX1X-if00-port0
+- /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AB7GW0G0-if00-port0
