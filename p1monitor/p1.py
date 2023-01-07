@@ -82,7 +82,7 @@ async def handleSerialInput():
 
           newSmartmeter = [
             {
-              "CONSUMPTION_GAS_M3": None,
+              "CONSUMPTION_GAS_M3": find_value(message, b"0-1:24.2.1", index=2, format='float'),
               "CONSUMPTION_W": find_value(message, b"1-0:1.7.0", 'float', 1000),
               "CONSUMPTION_KWH_LOW": find_value(message, b"1-0:1.8.1", 'float'),
               "CONSUMPTION_KWH_HIGH": find_value(message, b"1-0:1.8.2", 'float'),
