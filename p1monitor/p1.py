@@ -23,11 +23,11 @@ def crc16(data: bytes):
     return crc
 
 
-def find_value(message, id, format=None, factor=None):
+def find_value(message, id, index=1, format=None, factor=None):
  for line in message.split(b"\n"):
    if id in line:
      #print(f"id: {id}, line: {line}")
-     str = re.findall(b"\((.*)\)", line)[0].split(b"*")[0]
+     str = line[:-1].split(b"(")[index][:-1].split(b"*")[0]
      if format == "float":
        value = float(str)
      elif format == "int":
@@ -83,13 +83,13 @@ async def handleSerialInput():
           newSmartmeter = [
             {
               "CONSUMPTION_GAS_M3": find_value(message, b"0-1:24.2.1", index=2, format='float'),
-              "CONSUMPTION_W": find_value(message, b"1-0:1.7.0", 'float', 1000),
-              "CONSUMPTION_KWH_LOW": find_value(message, b"1-0:1.8.1", 'float'),
-              "CONSUMPTION_KWH_HIGH": find_value(message, b"1-0:1.8.2", 'float'),
+              "CONSUMPTION_W": find_value(message, b"1-0:1.7.0", format='float', factor=1000),
+              "CONSUMPTION_KWH_LOW": find_value(message, b"1-0:1.8.1", format='float'),
+              "CONSUMPTION_KWH_HIGH": find_value(message, b"1-0:1.8.2", format='float'),
               "PRODUCTION_W": None,
               "PRODUCTION_KWH_HIGH": None,
               "PRODUCTION_KWH_LOW": None,
-              "TARIFCODE": find_value(message, b"0-0:96.14.0", 'int'),
+              "TARIFCODE": find_value(message, b"0-0:96.14.0", format='int'),
             }
           ]
 
@@ -101,13 +101,13 @@ async def handleSerialInput():
            { "CONFIGURATION_ID": 15, "PARAMETER": None },
           ]
           newStatus = [
-            { "STATUS_ID": 74, "STATUS": find_value(message, b"1-0:21.7.0", 'float') },
+            { "STATUS_ID": 74, "STATUS": find_value(message, b"1-0:21.7.0", format='float') },
             { "STATUS_ID": 75, "STATUS": None },
             { "STATUS_ID": 76, "STATUS": None },
             { "STATUS_ID": 77, "STATUS": None },
             { "STATUS_ID": 78, "STATUS": None },
             { "STATUS_ID": 79, "STATUS": None },
-            { "STATUS_ID": 100, "STATUS": find_value(message, b'1-0:31.7.0', 'float') },
+            { "STATUS_ID": 100, "STATUS": find_value(message, b'1-0:31.7.0', format='float') },
             { "STATUS_ID": 101, "STATUS": None },
             { "STATUS_ID": 102, "STATUS": None },
             { "STATUS_ID": 103, "STATUS": None },
